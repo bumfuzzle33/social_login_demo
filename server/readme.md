@@ -1,0 +1,1 @@
+Usually the file ".env" will be added in the .gitignore file to keep the credentials offline but because this is a mini project i'm gonna share it to github.

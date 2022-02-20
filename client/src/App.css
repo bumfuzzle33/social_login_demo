@@ -1,0 +1,33 @@
+.App{
+    background-color:rgb(2, 31, 44);
+    min-height:100vh;
+    overflow:hidden;
+    
+}
+.main_title{
+    color:white;
+}
+
+#login_methods_container{
+    border-radius:10px;
+    border:solid 2px white;
+}
+#login_methods_container h2{
+    border-bottom:2px solid white;
+    padding:10px;
+    color:white;
+}
+.App section{
+    display:flex;
+    justify-content: center;
+}
+.login_method_btn{
+    width:100%;
+    padding:10px;
+    cursor:pointer;
+    
+}
+body{
+    margin: 0;
+
+}
