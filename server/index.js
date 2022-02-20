@@ -2,10 +2,10 @@ const express = require('express')
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
 const dotenv = require('dotenv')
+const { response } = require('express')
 
 dotenv.config()
-console.log(process.env.client_id)
-
+const google_oauth_endpoint = "https://accounts.google.com/o/oauth2/v2/auth"
 const server = express()
 const swaggerOptions = {
     swaggerDefinition:{
@@ -36,7 +36,7 @@ server.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocs))
    *         schema:
    *           type: object
    *           properties:
-   *             url:*url
+   *             url:https://www.google.com/o/v2/auth?google=data
    *
 
    */
@@ -44,7 +44,16 @@ server.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocs))
 server.get('/consentWindow/:social_media',(req,res)=>{
     let social_media = req.params.social_media
     if(social_media==='google'){
-        res.send('REST API for gooogle')
+        const client_id = process.env.google_client_id
+        const redirect_uri = process.env.google_oauth_redirect_url
+        const response_type = "code"
+        const scope =  "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+        const access_type = "offline"
+
+        let consentWindowObj = {
+            url:`https://accounts.google.com/o/oauth2/v2/auth?scope=${scope}&client_id=${client_id}&access_type=${access_type}&response_type=${response_type}&redirect_uri=${redirect_uri}`
+        }
+        res.send(consentWindowObj)
 
     }
 })

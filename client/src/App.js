@@ -1,6 +1,7 @@
 import './App.css';
 import {BsGoogle} from 'react-icons/bs'
 import axios from 'axios'
+import {BrowserRouter,Switch,Route} from 'react-router-dom';
 
 const server_url = 'http://localhost:4000'
 function App() {
