@@ -7,7 +7,7 @@ const Home = ()=>{
       if(social_media==='google'){
         axios.get(window.server_url+'/consentWindow/google')
         .then(response=>{
-            window.open(response.data.url,'_blank','location=yes,height=570,width=520,scrollbars=yes,status=yes')
+            window.open(response.data.url,'_self')
         })
         .catch(err=>console.error(err))
       }

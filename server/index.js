@@ -3,7 +3,8 @@ const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
 const dotenv = require('dotenv')
 const cors = require('cors')
-const { response } = require('express')
+const bodyParser = require('body-parser')
+const request = require('request')
 
 dotenv.config()
 const google_oauth_endpoint = "https://accounts.google.com/o/oauth2/v2/auth"
@@ -27,6 +28,10 @@ server.use(cors({
     cors:'*'
 }))
 
+//bodyParser.urlencoded parses urlencoded requests to res.body
+//The extended option allows to choose between parsing the URL-encoded data with the querystring library (when false) or the qs library (when true).
+server.use(bodyParser.urlencoded({extended:false}))
+server.use(bodyParser.json())
 server.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocs))
 /**
    * @swagger
@@ -61,6 +66,45 @@ server.get('/consentWindow/:social_media',(req,res)=>{
         res.send(consentWindowObj)
 
     }
+})
+/**
+   * @swagger
+   * /google/authCode:
+   *   post:
+   *     summary: Provides a Google auth window url
+   *     description: Responds with a json object which has a google consent window url in its url parameter.
+   *     security: []
+   *     responses:
+   *       200:
+   *         description: OK
+   *         schema:
+   *           type: object
+   *           properties:
+   *             url:https://www.google.com/o/v2/auth?google=data
+   *
+
+   */
+server.post('/google/authCode',(req,res)=>{
+    const authorizationCode = req.body.authorizationCode
+    //now that we have the authCode we need to send it over to google api to get our refresh token and access token
+    const client_id = process.env.google_client_id
+    const client_secret = process.env.google_client_secret
+    const grant_type = "authorization_code"
+    const redirect_uri = process.env.google_oauth_redirect_url
+    const googleApiRequestHeaders = {
+        uri:"https://oauth2.googleapis.com/token",
+        method:'POST',
+        headers:{
+            'Content-Type':'application/x-www-form-urlencoded'
+        },
+        body:`code=${authorizationCode}&client_id=${client_id}&client_secret=${client_secret}&grant_type=${grant_type}&redirect_uri=${redirect_uri}`
+    }
+    request(googleApiRequestHeaders,(err,response)=>{
+        if(err)
+            res.status(400).send(err)
+        else
+            res.send(response.body)
+    })
 })
 
 server.get('/oauth/google',(req,res)=>{
