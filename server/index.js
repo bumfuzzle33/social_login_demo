@@ -2,6 +2,7 @@ const express = require('express')
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
 const dotenv = require('dotenv')
+const cors = require('cors')
 const { response } = require('express')
 
 dotenv.config()
@@ -21,6 +22,10 @@ const swaggerOptions = {
     apis:["index.js"]
 }
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
+
+server.use(cors({
+    cors:'*'
+}))
 
 server.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocs))
 /**

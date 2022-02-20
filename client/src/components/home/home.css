@@ -1,4 +1,4 @@
-.App{
+.home{
     background-color:rgb(2, 31, 44);
     min-height:100vh;
     overflow:hidden;
@@ -17,17 +17,13 @@
     padding:10px;
     color:white;
 }
-.App section{
+.home section{
     display:flex;
     justify-content: center;
+    
 }
 .login_method_btn{
     width:100%;
     padding:10px;
     cursor:pointer;
-    
-}
-body{
-    margin: 0;
-
 }
