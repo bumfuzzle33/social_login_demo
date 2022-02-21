@@ -1,11 +1,19 @@
 import './home.css'
 import {BsGoogle} from 'react-icons/bs'
 import axios from 'axios'
+import {FiFacebook} from 'react-icons/fi'
 
 const Home = ()=>{
     function login(social_media){
       if(social_media==='google'){
         axios.get(window.server_url+'/consentWindow/google')
+        .then(response=>{
+            window.open(response.data.url,'_self')
+        })
+        .catch(err=>console.error(err))
+      }
+      else if(social_media==='facebook'){
+        axios.get(window.server_url+'/consentWindow/facebook')
         .then(response=>{
             window.open(response.data.url,'_self')
         })
@@ -26,7 +34,13 @@ const Home = ()=>{
                 <span className="icon">
                   <BsGoogle/>
                 </span>
-                <span className=''>Login with Google</span>
+                <span className=''>Continue With Google</span>
+              </button>
+              <button onClick={()=>login('facebook')} className="login_method_btn">
+                <span className="icon">
+                  <FiFacebook size="20px"/>
+                </span>
+                <span className=''>Continue With Facebook</span>
               </button>
             </div>
           </section>

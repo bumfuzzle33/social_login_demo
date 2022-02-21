@@ -1,6 +1,6 @@
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import Home from './components/home/home'
-import RedirectGoogle from './components/redirects/google_redirect'
+import Dashboard from './components/dashboard/dashboard'
 
 window.server_url = 'http://localhost:4000'
 
@@ -9,7 +9,7 @@ const App = ()=>{
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/authorisedRedirect/google' element={<RedirectGoogle/>}/>
+        <Route path='/dashboard' element={<Dashboard/>}/>
       </Routes>
     </BrowserRouter>
   )
