@@ -1,0 +1,18 @@
+#logged_in_container{
+    background-color: #001219;
+    min-height:100vh;
+}
+#info_container{
+    color:white;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    height:70vh;
+}
+#info_container>div img{
+    min-width:300px;
+    margin:50px 0;
+}
+#info_container>div{
+    text-align:center;
+}
